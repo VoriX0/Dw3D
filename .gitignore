@@ -1,1 +1,28 @@
+# Секреты и конфигурация
+config.py
+.env
+.env.local
+
+# Логи и пользовательские данные
 bot.log
+user_histories/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+
+# Редакторы
+.vscode/
+.idea/
+*.swp
+*.swo

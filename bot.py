@@ -16,9 +16,15 @@ from datetime import datetime, timezone
 from aiohttp_socks import ProxyConnector, ProxyType
 import httpx
 
+try:
+    from config import *
+except ImportError:
+    print("Ошибка: файл config.py не найден. Скопируйте config.example.py в config.py и заполните токены.")
+    exit(1)
 
-LOG_PATH = Path("bot.log").absolute()
-# Настройка логирования
+LOG_PATH = Path(LOG_PATH).absolute()
+SAVE_FOLDER = Path(SAVE_FOLDER).absolute()
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -75,6 +81,14 @@ MainRole = '''Роль: Мастер D&D. Создаешь уникальные 
 
 Plot = 'Все действия этого запроса нужно сделать 1 раз. Ты мастер игры D&D, основываясь на правилах, создай начало для сюжета для одного игрока. Принцип: Введение, предупреждение о пустом инвентаре и 1 уровне, просьба создания пресонажа. В конце своего ответа попроси пользователя создать персонажа по принципу: Имя, класс, предыстория.'
 
+def create_bot_with_proxy():
+    """Создаёт экземпляр Bot с прокси, если PROXY_URL задан"""
+    if PROXY_URL:
+        logger.info(f"Бот будет использовать прокси: {PROXY_URL.split('://')[0]}://***")
+        return Bot(token=TELEGRAM_BOT_TOKEN, proxy=PROXY_URL)
+    else:
+        logger.info("Прокси не используется")
+        return Bot(token=TELEGRAM_BOT_TOKEN)
 
 # Сессии и блокировки
 user_sessions: dict[int, "UserSession"] = {}
@@ -159,7 +173,7 @@ class UserSession:
         await self._initialized.wait()
 
 # Инициализация бота и диспетчера
-bot = Bot(token=API_TOKEN)
+bot = create_bot_with_proxy()
 dp = Dispatcher()
 # Клавиатуры
 
