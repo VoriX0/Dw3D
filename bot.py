@@ -1,6 +1,7 @@
 import asyncio
 import json
 import logging
+import sys
 import aiofiles
 import aiofiles.os as async_os
 from pathlib import Path
@@ -13,14 +14,18 @@ import tiktoken
 from typing import Optional
 import httpx
 from datetime import datetime, timezone
-from aiohttp_socks import ProxyConnector, ProxyType
-import httpx
 
-try:
-    from config import *
-except ImportError:
-    print("Ошибка: файл config.py не найден. Скопируйте config.example.py в config.py и заполните токены.")
-    exit(1)
+from config import *
+
+# Проверка, что токены заданы (на случай, если config.py пустой)
+if not TELEGRAM_BOT_TOKEN or not DEEPSEEK_API_KEY:
+    print("Ошибка: TELEGRAM_BOT_TOKEN и DEEPSEEK_API_KEY должны быть заданы в config.py")
+    sys.exit(1)
+
+# Если PROXY_URL задан пустой строкой, превращаем в None
+if PROXY_URL == "":
+    PROXY_URL = None
+
 
 LOG_PATH = Path(LOG_PATH).absolute()
 SAVE_FOLDER = Path(SAVE_FOLDER).absolute()

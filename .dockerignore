@@ -1,0 +1,10 @@
+config.py
+__pycache__
+*.pyc
+.git
+.gitignore
+user_histories/
+bot.log
+.env
+*.md
+.dockerignore
