@@ -14,6 +14,7 @@ import tiktoken
 from typing import Optional
 import httpx
 from datetime import datetime, timezone
+from aiogram.client.session.aiohttp import AiohttpSession
 
 from config import *
 
@@ -87,13 +88,15 @@ MainRole = '''Роль: Мастер D&D. Создаешь уникальные 
 Plot = 'Все действия этого запроса нужно сделать 1 раз. Ты мастер игры D&D, основываясь на правилах, создай начало для сюжета для одного игрока. Принцип: Введение, предупреждение о пустом инвентаре и 1 уровне, просьба создания пресонажа. В конце своего ответа попроси пользователя создать персонажа по принципу: Имя, класс, предыстория.'
 
 def create_bot_with_proxy():
-    """Создаёт экземпляр Bot с прокси, если PROXY_URL задан"""
+    
     if PROXY_URL:
-        logger.info(f"Бот будет использовать прокси: {PROXY_URL.split('://')[0]}://***")
-        return Bot(token=TELEGRAM_BOT_TOKEN, proxy=PROXY_URL)
+        logger.info(f"Бот использует этот прокси: {PROXY_URL.split('://')[0]}://***")
+        session = AiohttpSession(proxy=PROXY_URL)
+        return Bot(token=TELEGRAM_BOT_TOKEN, session=session)
     else:
-        logger.info("Прокси не используется")
+        logger.info(" ^= ^`     ^a           ^a       ^l   ^c   ^b ^a ^o")
         return Bot(token=TELEGRAM_BOT_TOKEN)
+
 
 # Сессии и блокировки
 user_sessions: dict[int, "UserSession"] = {}
