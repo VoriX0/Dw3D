@@ -16,23 +16,6 @@ from datetime import datetime, timezone
 from aiohttp_socks import ProxyConnector, ProxyType
 import httpx
 
-PROXY_HOST = "141.98.234.126"        # IP или домен
-PROXY_PORT = 5443                     # порт SOCKS5 / HTTP
-PROXY_USER = "username"               # если нужна авторизация
-PROXY_PASS = "password"               # если нужна авторизация
-PROXY_TYPE = ProxyType.MTPORTO         # или ProxyType.HTTP
-USE_PROXY = True
-
-def build_proxy_connector(proxy_type, host, port, user=None, pwd=None):
-    """Создаёт aiohttp-коннектор с прокси."""
-    return ProxyConnector(
-        proxy_type=proxy_type,
-        host=host,
-        port=port,
-        username=user,
-        password=pwd,
-        rdns=True          # разрешать DNS через прокси (важно для SOCKS5)
-    )
 
 LOG_PATH = Path("bot.log").absolute()
 # Настройка логирования
