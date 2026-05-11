@@ -1,11 +1,11 @@
-version: '3.8'
-
 services:
   bot:
     build: .
     container_name: Dw3D
     restart: unless-stopped
+    security_opt:
+      - apparmor=unconfined
     volumes:
-      - ./config.py:/app/config.py      
+      - ./config.py:/app/config.py
       - ./user_histories:/app/user_histories
       - ./bot.log:/app/bot.log
