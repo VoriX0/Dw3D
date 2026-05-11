@@ -41,12 +41,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Конфигурация
-API_TOKEN = "7886096966:AAH6VBJjwi82KYtJUXx2hm_2wpZrNKAu6zY"
-DEEPSEEK_API_KEY = "sk-05f9e78cc1d649469e4afdcf9343cc7c"
-SAVE_FOLDER = Path("user_histories").absolute()
-MAX_TOKENS = 50000
-ANTI_SPAM_RESET_DELAY = 5
 
 # Промпты
 MainRole = '''Роль: Мастер D&D. Создаешь уникальные локации, битвы, сюжет и прокачку. Жестко следи за правилами. 
